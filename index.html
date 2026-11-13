@@ -1,19 +1,99 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Privacy Policy | Water Sort Puzzle — Stillwave Studio</title><style>body{margin:0;background:#f3f7f8;color:#172b3c;font:17px/1.65 system-ui,sans-serif}main{max-width:780px;margin:36px auto;padding:32px;background:white;border-radius:16px}h1{font-size:30px;line-height:1.25}h2{font-size:22px;margin-top:32px}p,a{overflow-wrap:anywhere}a{color:#176257}@media(max-width:600px){main{margin:0;border-radius:0;padding:24px}}</style></head><body><main><h1>Water Sort Puzzle — Privacy Policy</h1>
-<p>Last updated: 10 October 2026<br>Developer: Stillwave Studio<br>Contact: <a href="mailto:sufianwp97dot@gmail.com">sufianwp97dot@gmail.com</a></p>
-<h2>About this policy</h2>
-<p>This policy describes the current ad-free version of Water Sort Puzzle, developed by Stillwave Studio, and how to contact us about privacy.</p>
-<h2>Game data</h2>
-<p>The game does not require an account. Puzzle progress, saved boards, best move counts, daily completion, and audio preferences are stored locally on your device to provide gameplay and resume functions. We do not receive those gameplay records on a developer-operated server.</p>
-<p>The current version includes no advertising, in-app purchases, or developer analytics services. Gameplay does not require access to contacts, camera, microphone, or precise location.</p>
-<h2>Retention and control</h2>
-<p>Local progress is retained until you clear application storage or remove the app. Your operating system may back up and restore application data according to your device settings. Clearing application storage resets saved puzzles and preferences. There is no game account to delete.</p>
-<h2>Contacting us</h2>
-<p>If you email us, we receive your email address and the information you choose to include. We use this information to respond to your support or privacy request and keep correspondence only as needed to resolve it and meet applicable obligations. Please do not include passwords, payment details, or identity documents.</p>
-<h2>Store, device, and website services</h2>
-<p>Google Play, your operating system, and your email provider operate their own services under their respective privacy policies. Visiting this privacy page also involves its hosting provider, GitHub Pages. These providers&#x27; services are separate from local game progress storage.</p>
-<p>Google Privacy Policy: <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a><br>GitHub Privacy Statement: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement</a></p>
-<h2>Future changes</h2>
-<p>If a future version adds advertising, analytics, accounts, or other services, we will update this policy and applicable in-app disclosures to explain their data practices before those features are released. The updated date will appear on this page.</p>
-<h2>Contact</h2>
-<p>For privacy questions or requests about support correspondence, contact Stillwave Studio at <a href="mailto:sufianwp97dot@gmail.com">sufianwp97dot@gmail.com</a>.<br></p></main></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stillwave Studio</title>
+  <meta name="description" content="Stillwave Studio makes calm, clever puzzle games for Android: Arrow Out, Water Sort Puzzle and Rope Untangle.">
+  <style>
+    :root {
+      --bg: #0a0f1f; --bg2: #141032; --card: rgba(255,255,255,0.045); --line: rgba(255,255,255,0.10); --text: #f2f5ff; --dim: #a7b1cf;
+      --cyan: #26d9ff; --pink: #ff4091; --amber: #ffa321;
+    }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) { --bg: #f5f7fc; --bg2: #ece9fb; --card: #ffffff; --line: #e1e6f0; --text: #14203a; --dim: #56627c; --cyan: #0a8fb3; --pink: #d42a74; --amber: #c27400; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--text); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(900px 500px at 15% -10%, rgba(38,217,255,0.16), transparent 60%), radial-gradient(800px 500px at 100% 110%, rgba(255,64,145,0.14), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg2)); }
+    main { max-width: 880px; margin: 0 auto; padding: 64px 20px 40px; }
+    header { text-align: center; margin-bottom: 52px; }
+    .mark { width: 76px; height: 76px; display: block; margin: 0 auto 20px; filter: drop-shadow(0 0 14px rgba(38,217,255,0.45)); }
+    h1 { font-size: clamp(36px, 6.5vw, 54px); line-height: 1.08; margin: 0; letter-spacing: -0.03em; }
+    .tagline { color: var(--dim); font-size: 19px; margin: 14px auto 0; max-width: 520px; }
+    h2 { font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan); margin: 0 0 18px; }
+    .games { display: grid; gap: 18px; }
+    .game { display: grid; grid-template-columns: 96px 1fr; gap: 22px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18); transition: transform .2s ease, border-color .2s ease; }
+    .game:hover { transform: translateY(-2px); border-color: rgba(38,217,255,0.45); }
+    .game img { width: 96px; height: 96px; border-radius: 22px; display: block; box-shadow: 0 8px 22px rgba(0,0,0,0.35); }
+    .game h3 { margin: 0 0 4px; font-size: 22px; letter-spacing: -0.01em; }
+    .game p { margin: 0 0 12px; color: var(--dim); font-size: 16px; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 15px; }
+    a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+    a:hover, a:focus-visible { text-decoration: underline; }
+    a.play { color: #fff; background: var(--pink); padding: 7px 16px; border-radius: 999px; box-shadow: 0 0 18px rgba(255,64,145,0.35); }
+    a.play:hover { text-decoration: none; filter: brightness(1.08); }
+    footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--dim); font-size: 15px; text-align: center; }
+    @media (max-width: 480px) { main { padding-top: 44px; } .game { grid-template-columns: 68px 1fr; gap: 14px; padding: 16px; } .game img { width: 68px; height: 68px; border-radius: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M12 46V14h34" fill="none" stroke="#26d9ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M40 6l10 8-10 8z" fill="#26d9ff"/>
+        <path d="M50 26v24H30" fill="none" stroke="#ffa321" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M34 42l-10 8 10 8z" fill="#ffa321"/>
+      </svg>
+      <h1>Stillwave Studio</h1>
+      <p class="tagline">Calm, clever puzzle games for Android. Play at your own pace.</p>
+    </header>
+
+    <section aria-labelledby="games-title">
+      <h2 id="games-title">Our games</h2>
+      <div class="games">
+        <article class="game">
+          <img src="images/arrowout.png" alt="Arrow Out icon" width="88" height="88">
+          <div>
+            <h3>Arrow Out: Logic Puzzle</h3>
+            <p>Tap glowing arrows to slide them off the board in the right order. 200 levels.</p>
+            <div class="links">
+              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.arrowout">Google Play</a>
+              <a href="arrowout-privacy/">Privacy policy</a>
+            </div>
+          </div>
+        </article>
+        <article class="game">
+          <img src="images/watersort.png" alt="Water Sort Puzzle icon" width="88" height="88">
+          <div>
+            <h3>Water Sort Puzzle</h3>
+            <p>Pour and sort colourful water until every tube holds one colour.</p>
+            <div class="links">
+              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.watersort">Google Play</a>
+              <a href="watersort-privacy/">Privacy policy</a>
+            </div>
+          </div>
+        </article>
+        <article class="game">
+          <img src="images/ropeuntangle.png" alt="Rope Untangle icon" width="88" height="88">
+          <div>
+            <h3>Rope Untangle: Knot Puzzle</h3>
+            <p>Untangle the knots and free every rope.</p>
+            <div class="links">
+              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.ropeuntangle">Google Play</a>
+              <a href="rope-untangle-privacy/privacy-policy.html">Privacy policy</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      Questions or feedback: <a href="mailto:sufianwp97dot@gmail.com">sufianwp97dot@gmail.com</a><br>
+      © 2026 Stillwave Studio
+    </footer>
+  </main>
+</body>
+</html>
