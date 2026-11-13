@@ -5,57 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stillwave Studio</title>
   <meta name="description" content="Stillwave Studio makes calm, clever puzzle games for Android: Arrow Out, Water Sort Puzzle, Rope Untangle and Scene Rescue.">
+  <meta property="og:title" content="Stillwave Studio">
+  <meta property="og:description" content="Calm, clever puzzle games for Android.">
+  <meta property="og:image" content="https://asufian97.github.io/images/banner-og.jpg">
+  <meta name="theme-color" content="#01081a">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo-32.png">
+  <link rel="apple-touch-icon" href="images/logo-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0a0f1f; --bg2: #141032; --card: rgba(255,255,255,0.045); --line: rgba(255,255,255,0.10); --text: #f2f5ff; --dim: #a7b1cf;
-      --cyan: #26d9ff; --pink: #ff4091; --amber: #ffa321;
-    }
-    @media (prefers-color-scheme: light) {
-      :root:not([data-theme="dark"]) { --bg: #f5f7fc; --bg2: #ece9fb; --card: #ffffff; --line: #e1e6f0; --text: #14203a; --dim: #56627c; --cyan: #0a8fb3; --pink: #d42a74; --amber: #c27400; }
-    }
+    :root { --bg: #01081a; --bg2: #071433; --card: rgba(243,233,214,0.05); --line: rgba(214,178,107,0.22); --ivory: #f3e9d6; --dim: #b8b2a3; --gold: #d6b26b; --gold2: #f0d79b; }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; color: var(--text); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(900px 500px at 15% -10%, rgba(38,217,255,0.16), transparent 60%), radial-gradient(800px 500px at 100% 110%, rgba(255,64,145,0.14), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg2)); }
-    main { max-width: 880px; margin: 0 auto; padding: 64px 20px 40px; }
-    header { text-align: center; margin-bottom: 52px; }
-    .mark { width: 76px; height: 76px; display: block; margin: 0 auto 20px; filter: drop-shadow(0 0 14px rgba(38,217,255,0.45)); }
-    h1 { font-size: clamp(36px, 6.5vw, 54px); line-height: 1.08; margin: 0; letter-spacing: -0.03em; }
-    .tagline { color: var(--dim); font-size: 19px; margin: 14px auto 0; max-width: 520px; }
-    h2 { font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan); margin: 0 0 18px; }
-    .games { display: grid; gap: 18px; }
-    .game { display: grid; grid-template-columns: 96px 1fr; gap: 22px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18); transition: transform .2s ease, border-color .2s ease; }
-    .game:hover { transform: translateY(-2px); border-color: rgba(38,217,255,0.45); }
-    .game img { width: 96px; height: 96px; border-radius: 22px; display: block; box-shadow: 0 8px 22px rgba(0,0,0,0.35); }
-    .game h3 { margin: 0 0 4px; font-size: 22px; letter-spacing: -0.01em; }
-    .game p { margin: 0 0 12px; color: var(--dim); font-size: 16px; }
-    .links { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 15px; }
-    a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+    body { margin: 0; min-height: 100vh; color: var(--ivory); font: 16.5px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: radial-gradient(1000px 600px at 50% -10%, #0c1d47 0%, transparent 70%), linear-gradient(180deg, var(--bg2), var(--bg) 60%); }
+    main { max-width: 960px; margin: 0 auto; padding: 28px 20px 44px; }
+    .hero { margin: 0 0 18px; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,0.55); }
+    .hero img { display: block; width: 100%; height: auto; aspect-ratio: 1672 / 941; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .tagline { text-align: center; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(22px, 3.4vw, 30px); color: var(--ivory); margin: 34px auto 48px; max-width: 640px; line-height: 1.35; }
+    .tagline em { color: var(--gold2); font-style: italic; }
+    h2 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 30px; letter-spacing: 0.04em; color: var(--gold2); margin: 0 0 6px; text-align: center; }
+    .rule { width: 72px; height: 2px; margin: 0 auto 28px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .games { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; }
+    .game { display: grid; grid-template-columns: 96px 1fr; gap: 20px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px;
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+    .game:hover { transform: translateY(-3px); border-color: rgba(240,215,155,0.55); box-shadow: 0 18px 40px rgba(0,0,0,0.4); }
+    .game img { width: 96px; height: 96px; border-radius: 22px; display: block; box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+    .game h3 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; font-size: 25px; line-height: 1.15; color: var(--ivory); }
+    .game p { margin: 0 0 12px; color: var(--dim); font-size: 15px; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 14.5px; }
+    a { color: var(--gold2); text-decoration: none; font-weight: 600; }
     a:hover, a:focus-visible { text-decoration: underline; }
-    a.play { color: #fff; background: var(--pink); padding: 7px 16px; border-radius: 999px; box-shadow: 0 0 18px rgba(255,64,145,0.35); }
-    a.play:hover { text-decoration: none; filter: brightness(1.08); }
-    footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--dim); font-size: 15px; text-align: center; }
-    @media (max-width: 480px) { main { padding-top: 44px; } .game { grid-template-columns: 68px 1fr; gap: 14px; padding: 16px; } .game img { width: 68px; height: 68px; border-radius: 16px; } }
+    a.play { color: #1a1407; background: linear-gradient(180deg, var(--gold2), var(--gold)); padding: 7px 16px; border-radius: 999px; box-shadow: 0 6px 18px rgba(214,178,107,0.25); }
+    a.play:hover { text-decoration: none; filter: brightness(1.06); }
+    footer { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--line); color: var(--dim); font-size: 14.5px; text-align: center; }
+    footer img { width: 44px; height: 44px; display: block; margin: 0 auto 12px; opacity: .9; }
+    @media (max-width: 520px) { main { padding: 14px 14px 36px; } .hero { border-radius: 18px; } .games { grid-template-columns: 1fr; } .game { grid-template-columns: 70px 1fr; gap: 14px; padding: 16px; } .game img { width: 70px; height: 70px; border-radius: 16px; } .game h3 { font-size: 22px; } }
   </style>
 </head>
 <body>
   <main>
-    <header>
-      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M12 46V14h34" fill="none" stroke="#26d9ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M40 6l10 8-10 8z" fill="#26d9ff"/>
-        <path d="M50 26v24H30" fill="none" stroke="#ffa321" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M34 42l-10 8 10 8z" fill="#ffa321"/>
-      </svg>
-      <h1>Stillwave Studio</h1>
-      <p class="tagline">Calm, clever puzzle games for Android. Play at your own pace.</p>
-    </header>
+    <div class="hero"><img src="images/banner.webp" alt="Stillwave Studio" width="1672" height="941"></div>
+    <h1 class="sr">Stillwave Studio</h1>
+    <p class="tagline">Calm, clever puzzle games for Android. <em>Play at your own pace.</em></p>
 
     <section aria-labelledby="games-title">
-      <h2 id="games-title">Our games</h2>
+      <h2 id="games-title">Our Games</h2>
+      <div class="rule"></div>
       <div class="games">
         <article class="game">
-          <img src="images/arrowout.png" alt="Arrow Out icon" width="88" height="88">
+          <img src="images/arrowout.png" alt="Arrow Out icon" width="96" height="96" loading="lazy">
           <div>
             <h3>Arrow Out: Logic Puzzle</h3>
             <p>Tap glowing arrows to slide them off the board in the right order. 200 levels.</p>
@@ -66,7 +66,7 @@
           </div>
         </article>
         <article class="game">
-          <img src="images/watersort.png" alt="Water Sort Puzzle icon" width="88" height="88">
+          <img src="images/watersort.png" alt="Water Sort Puzzle icon" width="96" height="96" loading="lazy">
           <div>
             <h3>Water Sort Puzzle</h3>
             <p>Pour and sort colourful water until every tube holds one colour.</p>
@@ -77,7 +77,7 @@
           </div>
         </article>
         <article class="game">
-          <img src="images/ropeuntangle.png" alt="Rope Untangle icon" width="88" height="88">
+          <img src="images/ropeuntangle.png" alt="Rope Untangle icon" width="96" height="96" loading="lazy">
           <div>
             <h3>Rope Untangle: Knot Puzzle</h3>
             <p>Untangle the knots and free every rope.</p>
@@ -88,7 +88,7 @@
           </div>
         </article>
         <article class="game">
-          <img src="images/scenerescue.png" alt="Scene Rescue icon" width="88" height="88">
+          <img src="images/scenerescue.png" alt="Scene Rescue icon" width="96" height="96" loading="lazy">
           <div>
             <h3>Scene Rescue: Brain Puzzle</h3>
             <p>Drag the right item to fix each scene. 50 tricky brain puzzles.</p>
@@ -102,6 +102,7 @@
     </section>
 
     <footer>
+      <img src="images/logo.webp" alt="" width="44" height="44">
       Questions or feedback: <a href="mailto:sufianwp97dot@gmail.com">sufianwp97dot@gmail.com</a><br>
       © 2026 Stillwave Studio
     </footer>
