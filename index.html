@@ -3,206 +3,794 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stillwave Studio</title>
-  <meta name="description" content="Stillwave Studio makes calm, clever puzzle games and useful tools for Android: Hoppa, Blockwarden, Paradox Path, Arrow Out, Water Sort Puzzle, Rope Untangle, Scene Rescue, JobMeasure, BeforeItExpires and QuitUrge.">
+  <title>Stillwave Studio — Interactive Games &amp; Private Tools for Android</title>
+  <meta name="description" content="Stillwave Studio makes calm, clever puzzle games and useful tools for Android: Hoppa, Blockwarden, Paradox Path, Arrow Out, Water Sort Puzzle, Rope Untangle, Scene Rescue, JobMeasure, BeforeItExpires, PlotPin, ScrollHalt and QuitUrge.">
   <meta property="og:title" content="Stillwave Studio">
   <meta property="og:description" content="Calm, clever puzzle games and useful tools for Android.">
   <meta property="og:image" content="https://asufian97.github.io/images/banner-og.jpg">
-  <meta name="theme-color" content="#01081a">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/logo-32.png">
-  <link rel="apple-touch-icon" href="images/logo-180.png">
+  <meta name="theme-color" content="#03060f">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/logo-32.png">
+  <link rel="apple-touch-icon" href="assets/icons/logo-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg: #01081a; --bg2: #071433; --card: rgba(243,233,214,0.05); --line: rgba(214,178,107,0.22); --ivory: #f3e9d6; --dim: #b8b2a3; --gold: #d6b26b; --gold2: #f0d79b; }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; color: var(--ivory); font: 16.5px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: radial-gradient(1000px 600px at 50% -10%, #0c1d47 0%, transparent 70%), linear-gradient(180deg, var(--bg2), var(--bg) 60%); }
-    main { max-width: 960px; margin: 0 auto; padding: 28px 20px 44px; }
-    .hero { margin: 0 0 18px; border-radius: 26px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,0.55); }
-    .hero img { display: block; width: 100%; height: auto; aspect-ratio: 1672 / 941; }
-    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .tagline { text-align: center; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(22px, 3.4vw, 30px); color: var(--ivory); margin: 34px auto 48px; max-width: 640px; line-height: 1.35; }
-    .tagline em { color: var(--gold2); font-style: italic; }
-    h2 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 30px; letter-spacing: 0.04em; color: var(--gold2); margin: 0 0 6px; text-align: center; }
-    .rule { width: 72px; height: 2px; margin: 0 auto 28px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-    .games { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; }
-    .game { display: grid; grid-template-columns: 96px 1fr; gap: 20px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px;
-      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
-    .game:hover { transform: translateY(-3px); border-color: rgba(240,215,155,0.55); box-shadow: 0 18px 40px rgba(0,0,0,0.4); }
-    .game img { width: 96px; height: 96px; border-radius: 22px; display: block; box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
-    .game h3 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; font-size: 25px; line-height: 1.15; color: var(--ivory); }
-    .game p { margin: 0 0 12px; color: var(--dim); font-size: 15px; }
-    .links { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 14.5px; }
-    a { color: var(--gold2); text-decoration: none; font-weight: 600; }
-    a:hover, a:focus-visible { text-decoration: underline; }
-    a.play { color: #1a1407; background: linear-gradient(180deg, var(--gold2), var(--gold)); padding: 7px 16px; border-radius: 999px; box-shadow: 0 6px 18px rgba(214,178,107,0.25); }
-    a.play:hover { text-decoration: none; filter: brightness(1.06); }
-    .soon { color: var(--dim); border: 1px solid var(--line); padding: 6px 15px; border-radius: 999px; font-size: 14px; font-weight: 600; }
-    .apps { margin-top: 56px; }
-    footer { margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--line); color: var(--dim); font-size: 14.5px; text-align: center; }
-    footer img { width: 44px; height: 44px; display: block; margin: 0 auto 12px; opacity: .9; }
-    @media (max-width: 520px) { main { padding: 14px 14px 36px; } .hero { border-radius: 18px; } .games { grid-template-columns: 1fr; } .game { grid-template-columns: 70px 1fr; gap: 14px; padding: 16px; } .game img { width: 70px; height: 70px; border-radius: 16px; } .game h3 { font-size: 22px; } }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <main>
-    <div class="hero"><img src="images/banner.webp" alt="Stillwave Studio" width="1672" height="941"></div>
-    <h1 class="sr">Stillwave Studio</h1>
-    <p class="tagline">Calm, clever puzzle games and useful tools for Android. <em>Play at your own pace.</em></p>
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-    <section aria-labelledby="games-title">
-      <h2 id="games-title">Our Games</h2>
-      <div class="rule"></div>
-      <div class="games">
-        <article class="game">
-          <img src="images/hoppa.png" alt="Hoppa icon" width="96" height="96" loading="lazy">
+  <!-- Custom Magnetic Cursor (Desktop) -->
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Live Interactive Three.js 3D WebGL Background -->
+  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+  <div class="ambient-vignette" aria-hidden="true"></div>
+  <div class="agency-grid-lines" aria-hidden="true"></div>
+
+  <div class="site-shell">
+    <!-- Sticky Floating Agency Header -->
+    <header class="site-header">
+      <nav class="nav-bar" aria-label="Primary">
+        <a class="brand" href="#" data-magnetic>
+          <img class="brand-mark" src="assets/icons/studio-mark.png" alt="Stillwave Studio emblem" width="36" height="36">
+          <span class="brand-text">
+            <span class="brand-name">Stillwave Studio</span>
+            <span class="brand-sub">ANDROID GAME &amp; PRODUCT LAB</span>
+          </span>
+        </a>
+
+        <div class="nav-links">
+          <a class="nav-link" href="#spotlight">Featured</a>
+          <a class="nav-link" href="#catalog" data-trigger-filter="game">Games (7)</a>
+          <a class="nav-link" href="#catalog" data-trigger-filter="app">Apps &amp; Tools (5)</a>
+          <a class="nav-link" href="#ethos">Studio Ethos</a>
+        </div>
+
+        <div class="nav-actions">
+          <button type="button" class="scene-btn" id="scene-mode-btn" data-magnetic data-cursor="MORPH" title="Switch 3D WebGL formation">
+            <span class="scene-dot" aria-hidden="true"></span>
+            <span id="scene-mode-label">3D: WAVE</span>
+          </button>
+          <a class="nav-cta" href="#contact" data-magnetic>Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ====================================================================
+           HERO SECTION — Kinetic Agency Typography + Interactive Constellation
+           ==================================================================== -->
+      <section class="hero-section">
+        <div class="container hero-grid">
           <div>
-            <h3>Hoppa: Bouncy Ball Jump</h3>
-            <p>Tap to hop past spikes, saws and boss chases. 200 levels across 21 worlds, plus Endless, Tower Climb and Daily Challenge.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.hoppa">Google Play</a>
-              <a href="hobba-privacy/privacy-policy.html">Privacy policy</a>
+            <div class="eyebrow" data-hero-reveal="1">
+              <span class="eyebrow-spark" aria-hidden="true"></span>
+              <span>Independent Android Studio · Crafted in Motion</span>
+            </div>
+
+            <h1 class="hero-title" data-hero-reveal="2">
+              Calm, clever <span class="serif-accent">worlds.</span><br>
+              Useful tools <span class="stroke-word">built</span> for life.
+            </h1>
+
+            <p class="hero-lead" data-hero-reveal="3">
+              Stillwave Studio designs tactile puzzle &amp; arcade games alongside private, offline-first utility apps for Android. Play at your own pace—with software that respects your focus and your device.
+            </p>
+
+            <div class="hero-actions" data-hero-reveal="4">
+              <a class="btn-primary" href="#catalog" data-trigger-filter="all" data-magnetic data-cursor="EXPLORE">
+                <span>Explore All 12 Releases</span>
+                <span aria-hidden="true">↓</span>
+              </a>
+              <a class="btn-ghost" href="#catalog" data-trigger-filter="game" data-magnetic>
+                <span>Our Games (7)</span>
+              </a>
+              <a class="btn-ghost" href="#catalog" data-trigger-filter="app" data-magnetic>
+                <span>Our Apps (5)</span>
+              </a>
+            </div>
+
+            <div class="hero-metrics" data-hero-reveal="5">
+              <div>
+                <div class="metric-value" data-count="12" data-suffix="">12</div>
+                <div class="metric-label">Original Titles</div>
+              </div>
+              <div>
+                <div class="metric-value" data-count="9" data-suffix=" Live">9<span> Live</span></div>
+                <div class="metric-label">On Google Play</div>
+              </div>
+              <div>
+                <div class="metric-value" data-count="100" data-suffix="%">100<span>%</span></div>
+                <div class="metric-label">Local-First Tools</div>
+              </div>
             </div>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/blockwarden.png" alt="Blockwarden icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Blockwarden: Block Puzzle RPG</h3>
-            <p>Clear lines to strike dungeon guardians, collect relics and build your streak. Journey, Daily Rite and Endless.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.blockwarden">Google Play</a>
-              <a href="Blockwarden-privacy/">Privacy policy</a>
+
+          <!-- Interactive 3D-Tilted Studio Showcase Card & Quick-Jump Dock -->
+          <div class="hero-constellation" data-hero-reveal="4">
+            <div class="orbital-emblem-card" id="hero-emblem-card">
+              <div class="emblem-top">
+                <span>STILLWAVE // SHOWCASE</span>
+                <span>INTERACTIVE 3D</span>
+              </div>
+              <div class="emblem-hero-banner">
+                <img src="assets/icons/banner.webp" alt="Stillwave Studio sculpted gold wave banner" width="1672" height="941">
+              </div>
+              <div class="floating-icon-strip" aria-label="Quick jump to featured titles">
+                <button type="button" class="mini-dock-icon" data-jump-card="card-hoppa" data-accent="#ff7849" data-cursor="VIEW" title="Jump to Hoppa">
+                  <img src="assets/icons/hoppa.png" alt="Hoppa">
+                </button>
+                <button type="button" class="mini-dock-icon" data-jump-card="card-blockwarden" data-accent="#b589ff" data-cursor="VIEW" title="Jump to Blockwarden">
+                  <img src="assets/icons/blockwarden.png" alt="Blockwarden">
+                </button>
+                <button type="button" class="mini-dock-icon" data-jump-card="card-paradoxpath" data-accent="#f5c87a" data-cursor="VIEW" title="Jump to Paradox Path">
+                  <img src="assets/icons/paradoxpath.png" alt="Paradox Path">
+                </button>
+                <button type="button" class="mini-dock-icon" data-jump-card="card-quiturge" data-accent="#5eead4" data-cursor="VIEW" title="Jump to QuitUrge">
+                  <img src="assets/icons/quiturge.png" alt="QuitUrge">
+                </button>
+                <button type="button" class="mini-dock-icon" data-jump-card="card-jobmeasure" data-accent="#fbbf24" data-cursor="VIEW" title="Jump to JobMeasure">
+                  <img src="assets/icons/jobmeasure.png" alt="JobMeasure">
+                </button>
+                <button type="button" class="mini-dock-icon" data-jump-card="card-arrowout" data-accent="#38bdf8" data-cursor="VIEW" title="Jump to Arrow Out">
+                  <img src="assets/icons/arrowout.png" alt="Arrow Out">
+                </button>
+              </div>
             </div>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/paradoxpath.png" alt="Paradox Path icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Paradox Path: Impossible Puzzle</h3>
-            <p>Guide Wick through impossible towers: turn the world and tip walls into floors. 400 calm chapters.</p>
-            <div class="links">
-              <span class="soon">Coming soon to Google Play</span>
-              <a href="paradoxpath-privacy/">Privacy policy</a>
-            </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           INFINITE KINETIC MARQUEE RIBBON
+           ==================================================================== -->
+      <div class="marquee-band" aria-hidden="true">
+        <div class="marquee-track">
+          <div class="marquee-item">
+            <span>Clever Puzzle Worlds</span><span class="marquee-sep">✦</span>
+            <span>Arcade Mastery</span><span class="marquee-sep">✦</span>
+            <span>100% On-Device Privacy Tools</span><span class="marquee-sep">✦</span>
+            <span>Offline-Ready Utilities</span><span class="marquee-sep">✦</span>
+            <span>Play At Your Own Pace</span><span class="marquee-sep">✦</span>
+            <span>No Forced Accounts</span><span class="marquee-sep">✦</span>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/arrowout.png" alt="Arrow Out icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Arrow Out: Logic Puzzle</h3>
-            <p>Tap glowing arrows to slide them off the board in the right order. 200 levels.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.arrowout">Google Play</a>
-              <a href="arrowout-privacy/">Privacy policy</a>
-            </div>
+          <div class="marquee-item">
+            <span>Clever Puzzle Worlds</span><span class="marquee-sep">✦</span>
+            <span>Arcade Mastery</span><span class="marquee-sep">✦</span>
+            <span>100% On-Device Privacy Tools</span><span class="marquee-sep">✦</span>
+            <span>Offline-Ready Utilities</span><span class="marquee-sep">✦</span>
+            <span>Play At Your Own Pace</span><span class="marquee-sep">✦</span>
+            <span>No Forced Accounts</span><span class="marquee-sep">✦</span>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/watersort.png" alt="Water Sort Puzzle icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Water Sort Puzzle</h3>
-            <p>Pour and sort colourful water until every tube holds one colour.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.watersort">Google Play</a>
-              <a href="watersort-privacy/">Privacy policy</a>
-            </div>
-          </div>
-        </article>
-        <article class="game">
-          <img src="images/ropeuntangle.png" alt="Rope Untangle icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Rope Untangle: Knot Puzzle</h3>
-            <p>Untangle the knots and free every rope.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.ropeuntangle">Google Play</a>
-              <a href="rope-untangle-privacy/privacy-policy.html">Privacy policy</a>
-            </div>
-          </div>
-        </article>
-        <article class="game">
-          <img src="images/scenerescue.png" alt="Scene Rescue icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Scene Rescue: Brain Puzzle</h3>
-            <p>Drag the right item to fix each scene. 50 tricky brain puzzles.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwave.scenerescue">Google Play</a>
-              <a href="scenerescue-privacy/">Privacy policy</a>
-            </div>
-          </div>
-        </article>
+        </div>
       </div>
-    </section>
 
-    <section aria-labelledby="apps-title" class="apps">
-      <h2 id="apps-title">Our Apps</h2>
-      <div class="rule"></div>
-      <div class="games">
-        <article class="game">
-          <img src="images/quiturge.png" alt="QuitUrge icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>Quit Porn Addiction: QuitUrge</h3>
-            <p>Beat urges with a 10-minute daily plan, 60-second Urge Help, streaks, 7/30/90-day challenges and a private journal. No account, data stays on your phone. 18+.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.quiturge">Google Play</a>
-              <a href="quiturge-privacy/">Privacy policy</a>
+      <!-- ====================================================================
+           FEATURED IN MOTION — Auto-Cycling Interactive Spotlight Stage
+           ==================================================================== -->
+      <section class="spotlight-section" id="spotlight" aria-labelledby="spotlight-heading">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <div>
+              <div class="section-kicker">01 // Featured Highlights</div>
+              <h2 class="section-title" id="spotlight-heading">Flagship releases <em>in motion</em></h2>
+            </div>
+
+            <div class="spotlight-tabs" role="tablist" aria-label="Featured releases">
+              <button type="button" class="spot-tab is-active" role="tab" aria-selected="true">
+                01 Hoppa
+                <span class="spot-progress" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="spot-tab" role="tab" aria-selected="false">
+                02 Blockwarden
+                <span class="spot-progress" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="spot-tab" role="tab" aria-selected="false">
+                03 Paradox Path
+                <span class="spot-progress" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="spot-tab" role="tab" aria-selected="false">
+                04 QuitUrge
+                <span class="spot-progress" aria-hidden="true"></span>
+              </button>
             </div>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/plotpin.png" alt="PlotPin icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>PlotPin: GPS Land Area Measure</h3>
-            <p>Measure land area and distance on satellite maps or by walking the boundary. Regional units like Bigha, Katha &amp; Marla, PDF reports, no ads.</p>
-            <div class="links">
-              <span class="soon">Coming soon to Google Play</span>
-              <a href="plotpin-privacy/">Privacy policy</a>
+
+          <div class="spotlight-stage" id="spotlight-stage" data-reveal>
+            <div class="spotlight-glow" aria-hidden="true"></div>
+
+            <!-- Slide 1: Hoppa -->
+            <div class="spotlight-slide is-active" data-accent="#ff7849" data-glow="rgba(255, 120, 73, 0.28)">
+              <div class="spot-icon-pedestal">
+                <div class="spot-icon-ring" aria-hidden="true"></div>
+                <img src="assets/icons/hoppa.png" alt="Hoppa icon" width="132" height="132">
+              </div>
+              <div>
+                <div class="spot-meta">
+                  <span class="badge-type">Featured Game</span>
+                  <span class="badge-chip">200 Levels · 21 Worlds</span>
+                  <span class="badge-chip">Boss Chases &amp; Daily Challenge</span>
+                </div>
+                <h3 class="spot-title">Hoppa: Bouncy Ball Jump</h3>
+                <p class="spot-desc">Tap to hop past spikes, saws and boss chases. 200 levels across 21 worlds, plus Endless, Tower Climb and Daily Challenge.</p>
+                <div class="card-footer" style="border-top:none; padding-top:0; justify-content:flex-start; gap:18px;">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.hoppa" data-magnetic data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="hobba-privacy/privacy-policy.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Blockwarden -->
+            <div class="spotlight-slide" data-accent="#b589ff" data-glow="rgba(181, 137, 255, 0.28)">
+              <div class="spot-icon-pedestal">
+                <div class="spot-icon-ring" aria-hidden="true"></div>
+                <img src="assets/icons/blockwarden.png" alt="Blockwarden icon" width="132" height="132">
+              </div>
+              <div>
+                <div class="spot-meta">
+                  <span class="badge-type">Puzzle RPG</span>
+                  <span class="badge-chip">Relics &amp; Guardians</span>
+                  <span class="badge-chip">Journey · Daily Rite · Endless</span>
+                </div>
+                <h3 class="spot-title">Blockwarden: Block Puzzle RPG</h3>
+                <p class="spot-desc">Clear lines to strike dungeon guardians, collect relics and build your streak. Journey, Daily Rite and Endless.</p>
+                <div class="card-footer" style="border-top:none; padding-top:0; justify-content:flex-start; gap:18px;">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.blockwarden" data-magnetic data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="Blockwarden-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Paradox Path -->
+            <div class="spotlight-slide" data-accent="#f5c87a" data-glow="rgba(245, 200, 122, 0.28)">
+              <div class="spot-icon-pedestal">
+                <div class="spot-icon-ring" aria-hidden="true"></div>
+                <img src="assets/icons/paradoxpath.png" alt="Paradox Path icon" width="132" height="132">
+              </div>
+              <div>
+                <div class="spot-meta">
+                  <span class="badge-type">Upcoming Architecture Puzzle</span>
+                  <span class="badge-chip">400 Calm Chapters</span>
+                  <span class="badge-chip">Perspective Shifting</span>
+                </div>
+                <h3 class="spot-title">Paradox Path: Impossible Puzzle</h3>
+                <p class="spot-desc">Guide Wick through impossible towers: turn the world and tip walls into floors. 400 calm chapters.</p>
+                <div class="card-footer" style="border-top:none; padding-top:0; justify-content:flex-start; gap:18px;">
+                  <span class="soon-pill"><span class="soon-dot" aria-hidden="true"></span>Coming soon to Google Play</span>
+                  <a class="privacy-link" href="paradoxpath-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4: QuitUrge -->
+            <div class="spotlight-slide" data-accent="#5eead4" data-glow="rgba(94, 234, 212, 0.26)">
+              <div class="spot-icon-pedestal">
+                <div class="spot-icon-ring" aria-hidden="true"></div>
+                <img src="assets/icons/quiturge.png" alt="QuitUrge icon" width="132" height="132">
+              </div>
+              <div>
+                <div class="spot-meta">
+                  <span class="badge-type is-tool">Private Wellness App</span>
+                  <span class="badge-chip">No Account · On-Device</span>
+                  <span class="badge-chip">7 / 30 / 90-Day Challenges</span>
+                </div>
+                <h3 class="spot-title">Quit Porn Addiction: QuitUrge</h3>
+                <p class="spot-desc">Beat urges with a 10-minute daily plan, 60-second Urge Help, streaks, 7/30/90-day challenges and a private journal. No account, data stays on your phone. 18+.</p>
+                <div class="card-footer" style="border-top:none; padding-top:0; justify-content:flex-start; gap:18px;">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.quiturge" data-magnetic data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="quiturge-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/scrollhalt.png" alt="ScrollHalt icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>ScrollHalt: Reels &amp; Alert Lock</h3>
-            <p>Stop doomscrolling: a calm pause before distracting apps, block only Reels &amp; Shorts, and hold alerts for focus. 100% on-device.</p>
-            <div class="links">
-              <span class="soon">Coming soon to Google Play</span>
-              <a href="scrollhalt-privacy/">Privacy policy</a>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           COMPLETE INTERACTIVE CATALOG — All 12 Games & Apps
+           ==================================================================== -->
+      <section class="catalog-section" id="catalog" aria-labelledby="catalog-heading">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <div>
+              <div class="section-kicker">02 // Complete Portfolio</div>
+              <h2 class="section-title" id="catalog-heading">Every game &amp; utility <em>crafted by Stillwave</em></h2>
             </div>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/jobmeasure.png" alt="JobMeasure icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>JobMeasure: Photo &amp; Estimates</h3>
-            <p>Mark measurements on site photos, build estimates and share PDF quotes. Works offline.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.jobmeasure">Google Play</a>
-              <a href="jobmeasure-privacy/">Privacy policy</a>
+
+          <!-- Sticky Filter, Instant Search & Grid/Runway View Switcher -->
+          <div class="catalog-toolbar" data-reveal>
+            <div class="filter-group" role="group" aria-label="Filter catalog">
+              <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">
+                All <span class="filter-count">12</span>
+              </button>
+              <button type="button" class="filter-btn" data-filter="game" aria-pressed="false">
+                Games <span class="filter-count">7</span>
+              </button>
+              <button type="button" class="filter-btn" data-filter="app" aria-pressed="false">
+                Apps &amp; Tools <span class="filter-count">5</span>
+              </button>
+              <button type="button" class="filter-btn" data-filter="live" aria-pressed="false">
+                Google Play <span class="filter-count">9</span>
+              </button>
+              <button type="button" class="filter-btn" data-filter="soon" aria-pressed="false">
+                Coming Soon <span class="filter-count">3</span>
+              </button>
+            </div>
+
+            <div class="toolbar-right">
+              <div class="search-wrap">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+                </svg>
+                <input type="search" id="catalog-search" class="search-input" placeholder="Search games, tools, offline..." aria-label="Search games and apps">
+              </div>
+
+              <div class="view-toggle" role="group" aria-label="Layout view">
+                <button type="button" class="view-btn is-active" data-view="grid">GRID</button>
+                <button type="button" class="view-btn" data-view="runway">RUNWAY</button>
+              </div>
             </div>
           </div>
-        </article>
-        <article class="game">
-          <img src="images/beforeitexpires.png" alt="BeforeItExpires icon" width="96" height="96" loading="lazy">
-          <div>
-            <h3>BeforeItExpires: Expiry Tracker</h3>
-            <p>Track expiry dates for food, warranties and subscriptions. Scan a barcode to add items and get reminded in time.</p>
-            <div class="links">
-              <a class="play" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.beforeitexpires">Google Play</a>
-              <a href="beforeitexpire-privacy/">Privacy policy</a>
+
+          <!-- ==================== OUR GAMES (7) ==================== -->
+          <div class="category-block" id="games-block">
+            <div class="category-banner" data-reveal>
+              <div class="category-title-wrap">
+                <span class="category-num">01 / GAMES</span>
+                <h3 class="category-heading">Our Games</h3>
+              </div>
+              <span class="category-caption">Tactile puzzles, perspective worlds &amp; arcade challenges</span>
+            </div>
+
+            <div class="showcase-grid">
+              <!-- 01 Hoppa -->
+              <article class="showcase-card" id="card-hoppa" data-kind="game" data-status="live" data-accent="#ff7849" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/hoppa.png" alt="Hoppa icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">01 // Arcade</span>
+                        <span class="card-tag">21 Worlds</span>
+                      </div>
+                      <h4 class="card-title">Hoppa: Bouncy Ball Jump</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Tap to hop past spikes, saws and boss chases. 200 levels across 21 worlds, plus Endless, Tower Climb and Daily Challenge.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.hoppa" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="hobba-privacy/privacy-policy.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 02 Blockwarden -->
+              <article class="showcase-card" id="card-blockwarden" data-kind="game" data-status="live" data-accent="#b589ff" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/blockwarden.png" alt="Blockwarden icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">02 // Puzzle RPG</span>
+                        <span class="card-tag">Relics &amp; Streak</span>
+                      </div>
+                      <h4 class="card-title">Blockwarden: Block Puzzle RPG</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Clear lines to strike dungeon guardians, collect relics and build your streak. Journey, Daily Rite and Endless.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.blockwarden" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="Blockwarden-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 03 Paradox Path -->
+              <article class="showcase-card" id="card-paradoxpath" data-kind="game" data-status="soon" data-accent="#f5c87a" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/paradoxpath.png" alt="Paradox Path icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">03 // Perspective</span>
+                        <span class="card-tag">400 Chapters</span>
+                      </div>
+                      <h4 class="card-title">Paradox Path: Impossible Puzzle</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Guide Wick through impossible towers: turn the world and tip walls into floors. 400 calm chapters.</p>
+                </div>
+                <div class="card-footer">
+                  <span class="soon-pill"><span class="soon-dot" aria-hidden="true"></span>Coming soon to Google Play</span>
+                  <a class="privacy-link" href="paradoxpath-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 04 Arrow Out -->
+              <article class="showcase-card" id="card-arrowout" data-kind="game" data-status="live" data-accent="#38bdf8" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/arrowout.png" alt="Arrow Out icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">04 // Logic</span>
+                        <span class="card-tag">200 Levels</span>
+                      </div>
+                      <h4 class="card-title">Arrow Out: Logic Puzzle</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Tap glowing arrows to slide them off the board in the right order. 200 levels.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.arrowout" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="arrowout-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 05 Water Sort Puzzle -->
+              <article class="showcase-card" id="card-watersort" data-kind="game" data-status="live" data-accent="#60a5fa" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/watersort.png" alt="Water Sort Puzzle icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">05 // Relaxing Sort</span>
+                        <span class="card-tag">Calm Flow</span>
+                      </div>
+                      <h4 class="card-title">Water Sort Puzzle</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Pour and sort colourful water until every tube holds one colour.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.watersort" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="watersort-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 06 Rope Untangle -->
+              <article class="showcase-card" id="card-ropeuntangle" data-kind="game" data-status="live" data-accent="#fb923c" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/ropeuntangle.png" alt="Rope Untangle icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">06 // Spatial Knot</span>
+                        <span class="card-tag">Tactile 3D</span>
+                      </div>
+                      <h4 class="card-title">Rope Untangle: Knot Puzzle</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Untangle the knots and free every rope.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.ropeuntangle" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="rope-untangle-privacy/privacy-policy.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 07 Scene Rescue -->
+              <article class="showcase-card" id="card-scenerescue" data-kind="game" data-status="live" data-accent="#facc15" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/scenerescue.png" alt="Scene Rescue icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">07 // Brain Teaser</span>
+                        <span class="card-tag">50 Puzzles</span>
+                      </div>
+                      <h4 class="card-title">Scene Rescue: Brain Puzzle</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Drag the right item to fix each scene. 50 tricky brain puzzles.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwave.scenerescue" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="scenerescue-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
             </div>
           </div>
-        </article>
+
+          <!-- ==================== OUR APPS & TOOLS (5) ==================== -->
+          <div class="category-block" id="apps-block">
+            <div class="category-banner" data-reveal>
+              <div class="category-title-wrap">
+                <span class="category-num is-mint">02 / APPS &amp; TOOLS</span>
+                <h3 class="category-heading">Our Apps</h3>
+              </div>
+              <span class="category-caption">Private, offline-capable tools designed around respect &amp; utility</span>
+            </div>
+
+            <div class="showcase-grid">
+              <!-- 08 QuitUrge -->
+              <article class="showcase-card" id="card-quiturge" data-kind="app" data-status="live" data-accent="#5eead4" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/quiturge.png" alt="QuitUrge icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">08 // Habit &amp; Focus</span>
+                        <span class="card-tag">On-Device · 18+</span>
+                      </div>
+                      <h4 class="card-title">Quit Porn Addiction: QuitUrge</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Beat urges with a 10-minute daily plan, 60-second Urge Help, streaks, 7/30/90-day challenges and a private journal. No account, data stays on your phone. 18+.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.quiturge" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="quiturge-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 09 PlotPin -->
+              <article class="showcase-card" id="card-plotpin" data-kind="app" data-status="soon" data-accent="#34d399" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/plotpin.png" alt="PlotPin icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">09 // GPS Mapping</span>
+                        <span class="card-tag">PDF · No Ads</span>
+                      </div>
+                      <h4 class="card-title">PlotPin: GPS Land Area Measure</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Measure land area and distance on satellite maps or by walking the boundary. Regional units like Bigha, Katha &amp; Marla, PDF reports, no ads.</p>
+                </div>
+                <div class="card-footer">
+                  <span class="soon-pill"><span class="soon-dot" aria-hidden="true"></span>Coming soon to Google Play</span>
+                  <a class="privacy-link" href="plotpin-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 10 ScrollHalt -->
+              <article class="showcase-card" id="card-scrollhalt" data-kind="app" data-status="soon" data-accent="#818cf8" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/scrollhalt.png" alt="ScrollHalt icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">10 // Mindful Wellbeing</span>
+                        <span class="card-tag">100% On-Device</span>
+                      </div>
+                      <h4 class="card-title">ScrollHalt: Reels &amp; Alert Lock</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Stop doomscrolling: a calm pause before distracting apps, block only Reels &amp; Shorts, and hold alerts for focus. 100% on-device.</p>
+                </div>
+                <div class="card-footer">
+                  <span class="soon-pill"><span class="soon-dot" aria-hidden="true"></span>Coming soon to Google Play</span>
+                  <a class="privacy-link" href="scrollhalt-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 11 JobMeasure -->
+              <article class="showcase-card" id="card-jobmeasure" data-kind="app" data-status="live" data-accent="#fbbf24" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/jobmeasure.png" alt="JobMeasure icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">11 // Field Utility</span>
+                        <span class="card-tag">Works Offline</span>
+                      </div>
+                      <h4 class="card-title">JobMeasure: Photo &amp; Estimates</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Mark measurements on site photos, build estimates and share PDF quotes. Works offline.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.jobmeasure" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="jobmeasure-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+
+              <!-- 12 BeforeItExpires -->
+              <article class="showcase-card" id="card-beforeitexpires" data-kind="app" data-status="live" data-accent="#4ade80" data-reveal>
+                <div>
+                  <div class="card-top">
+                    <div class="card-icon-wrap">
+                      <img src="assets/icons/beforeitexpires.png" alt="BeforeItExpires icon" width="84" height="84" loading="lazy">
+                    </div>
+                    <div class="card-header-meta">
+                      <div class="card-index-row">
+                        <span class="card-index">12 // Smart Organizer</span>
+                        <span class="card-tag">Barcode Scan</span>
+                      </div>
+                      <h4 class="card-title">BeforeItExpires: Expiry Tracker</h4>
+                    </div>
+                  </div>
+                  <p class="card-intro">Track expiry dates for food, warranties and subscriptions. Scan a barcode to add items and get reminded in time.</p>
+                </div>
+                <div class="card-footer">
+                  <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.stillwavestudio.beforeitexpires" data-cursor="PLAY">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17c0 .8.9 1.3 1.6.8l14-8.5c.6-.4.6-1.2 0-1.6l-14-8.5C4.9 2.2 4 2.7 4 3.5z"/></svg>
+                    <span>Google Play</span>
+                  </a>
+                  <a class="privacy-link" href="beforeitexpire-privacy/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Privacy policy</span>
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Empty State when Search has 0 Matches -->
+          <div class="empty-state" id="empty-state">
+            <p style="margin:0 0 14px; font-size:17px;">No games or apps matched your search.</p>
+            <button type="button" class="btn-ghost" id="reset-filters" style="cursor:pointer;">Reset Filters</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           STUDIO ETHOS — Three Agency Principles
+           ==================================================================== -->
+      <section class="ethos-section" id="ethos" aria-labelledby="ethos-heading">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <div>
+              <div class="section-kicker">03 // Studio Philosophy</div>
+              <h2 class="section-title" id="ethos-heading">Designed for <em>clarity &amp; flow</em></h2>
+            </div>
+          </div>
+
+          <div class="ethos-grid">
+            <div class="ethos-card" data-reveal>
+              <span class="ethos-num">01 // PACING</span>
+              <h3>Play at Your Own Pace</h3>
+              <p>From 400-chapter perspective towers to quick daily puzzle rites, every game rewards curiosity, clean mechanics, and unhurried mastery.</p>
+            </div>
+            <div class="ethos-card" data-reveal>
+              <span class="ethos-num">02 // PRIVACY</span>
+              <h3>On-Device by Default</h3>
+              <p>Our utility apps keep sensitive journals, photos, quotes, and focus locks right on your phone—without forced sign-ups or cloud clutter.</p>
+            </div>
+            <div class="ethos-card" data-reveal>
+              <span class="ethos-num">03 // CRAFT</span>
+              <h3>Built for Everyday Android</h3>
+              <p>Fast startup, offline reliability, transparent privacy policies, and tactile polish across phones and tablets.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====================================================================
+         AGENCY FOOTER
+         ==================================================================== -->
+    <footer class="site-footer" id="contact">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img src="assets/icons/studio-mark.png" alt="Stillwave Studio" width="52" height="52">
+          <div>
+            <div class="footer-title">STILLWAVE STUDIO</div>
+            <div class="footer-copy">© 2026 Stillwave Studio · Calm games &amp; private tools for Android.</div>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <a class="email-pill" href="mailto:sufianwp97dot@gmail.com" data-magnetic data-cursor="EMAIL">
+            <span>sufianwp97dot@gmail.com</span>
+          </a>
+          <button type="button" class="copy-btn" id="copy-email-btn" data-magnetic>Copy Email</button>
+        </div>
       </div>
-    </section>
-
-    <footer>
-      <img src="images/logo.webp" alt="" width="44" height="44">
-      Questions or feedback: <a href="mailto:sufianwp97dot@gmail.com">sufianwp97dot@gmail.com</a><br>
-      © 2026 Stillwave Studio
     </footer>
-  </main>
+  </div>
+
+  <!-- Copy Feedback Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied sufianwp97dot@gmail.com to clipboard</div>
+
+  <!-- Three.js WebGL Engine + Interactive Scene & UI Scripts -->
+  <script defer src="assets/js/three.min.js"></script>
+  <script defer src="assets/js/scene.js"></script>
+  <script defer src="assets/js/app.js"></script>
 </body>
 </html>
