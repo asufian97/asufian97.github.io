@@ -1,18 +1,11 @@
-/* ==========================================================================
-   Stillwave Studio — Interactive Agency Motion & Showcase Controller
-   Handles: Magnetic Cursor, 3D Card Tilt + Spotlight, Live Category Filter &
-   Search, Grid/Runway View Toggle, Auto-Playing Spotlight Stage, Counters,
-   Scroll Progress, and Three.js Color Synchronization.
-   ========================================================================== */
 (function () {
   'use strict';
 
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isFinePointer = window.matchMedia('(pointer: fine)').matches;
 
-  // --------------------------------------------------------------------------
-  // 1. Top Scroll Progress Bar
-  // --------------------------------------------------------------------------
+  let motionPaused = reducedMotionQuery.matches;
+
   const progressBar = document.getElementById('scroll-progress');
   function updateScrollProgress() {
     if (!progressBar) return;
@@ -23,134 +16,113 @@
   window.addEventListener('scroll', updateScrollProgress, { passive: true });
   updateScrollProgress();
 
-  // --------------------------------------------------------------------------
-  // 2. Custom Magnetic Cursor Follower (Desktop Fine Pointer)
-  // --------------------------------------------------------------------------
-  const cursorDot = document.getElementById('cursor-dot');
-  const cursorRing = document.getElementById('cursor-ring');
-
-  if (isFinePointer && cursorDot && cursorRing && !prefersReduced) {
-    let cx = -100, cy = -100;
-    let rx = -100, ry = -100;
-    let cursorVisible = false;
-
-    window.addEventListener('pointermove', (e) => {
-      cx = e.clientX;
-      cy = e.clientY;
-      if (!cursorVisible) {
-        cursorVisible = true;
-        rx = cx;
-        ry = cy;
-        cursorDot.style.opacity = '1';
-        cursorRing.style.opacity = '1';
-      }
-    }, { passive: true });
-
-    document.addEventListener('pointerleave', () => {
-      cursorVisible = false;
-      cursorDot.style.opacity = '0';
-      cursorRing.style.opacity = '0';
+  const themeBtns = Array.from(document.querySelectorAll('[data-theme-toggle]'));
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtns.forEach((btn) => {
+      btn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      btn.textContent = theme === 'light' ? 'Theme: Ivory' : 'Theme: Midnight';
     });
-
-    function tickCursor() {
-      rx += (cx - rx) * 0.18;
-      ry += (cy - ry) * 0.18;
-      cursorDot.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      cursorRing.style.transform = `translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0)`;
-      requestAnimationFrame(tickCursor);
+    if (window.StillwaveScene && window.StillwaveScene.setTheme) {
+      window.StillwaveScene.setTheme(theme);
     }
-    requestAnimationFrame(tickCursor);
+    try {
+      localStorage.setItem('stillwave-theme', theme);
+    } catch (_) {}
+  }
 
-    // Contextual hover expansion
-    document.querySelectorAll('a, button, [data-cursor]').forEach((el) => {
-      el.addEventListener('pointerenter', () => {
-        const label = el.getAttribute('data-cursor') || '';
-        cursorRing.textContent = label;
-        if (label) {
-          cursorRing.classList.add('is-interactive');
-        } else {
-          cursorRing.style.borderColor = 'rgba(247, 223, 164, 0.9)';
-        }
-      });
-      el.addEventListener('pointerleave', () => {
-        cursorRing.textContent = '';
-        cursorRing.classList.remove('is-interactive');
-        cursorRing.style.borderColor = '';
-      });
+  let initialTheme = 'dark';
+  try {
+    const saved = localStorage.getItem('stillwave-theme');
+    if (saved === 'light' || saved === 'dark') initialTheme = saved;
+  } catch (_) {}
+  applyTheme(initialTheme);
+
+  themeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+  });
+
+  const motionBtns = Array.from(document.querySelectorAll('[data-motion-toggle]'));
+  function applyMotionState(paused) {
+    motionPaused = Boolean(paused);
+    document.documentElement.setAttribute('data-motion', motionPaused ? 'paused' : 'active');
+    motionBtns.forEach((btn) => {
+      btn.setAttribute('aria-pressed', motionPaused ? 'true' : 'false');
+      btn.textContent = motionPaused ? 'Resume Motion' : 'Pause Motion';
+    });
+    if (window.StillwaveScene && window.StillwaveScene.setPaused) {
+      window.StillwaveScene.setPaused(motionPaused);
+    }
+  }
+  applyMotionState(motionPaused);
+
+  motionBtns.forEach((btn) => {
+    btn.addEventListener('click', () => applyMotionState(!motionPaused));
+  });
+
+  const sceneBtns = Array.from(document.querySelectorAll('[data-scene-cycle]'));
+  sceneBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!window.StillwaveScene) return;
+      const nextMode = window.StillwaveScene.cycleMode();
+      sceneBtns.forEach((b) => { b.textContent = '3D: ' + nextMode; });
+    });
+  });
+
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileDrawer = document.getElementById('mobile-nav-drawer');
+
+  function setMobileMenu(open) {
+    if (!mobileMenuBtn || !mobileDrawer) return;
+    mobileDrawer.classList.toggle('is-open', open);
+    mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileMenuBtn.textContent = open ? 'Close' : 'Menu';
+  }
+
+  if (mobileMenuBtn && mobileDrawer) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.contains('is-open');
+      setMobileMenu(!isOpen);
     });
 
-    // Magnetic Pull on [data-magnetic] elements
-    document.querySelectorAll('[data-magnetic]').forEach((el) => {
-      el.addEventListener('pointermove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.22;
-        const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.22;
-        el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
-      });
-      el.addEventListener('pointerleave', () => {
-        el.style.transform = '';
-      });
+    mobileDrawer.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMobileMenu(false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileDrawer.classList.contains('is-open')) {
+        setMobileMenu(false);
+        mobileMenuBtn.focus();
+      }
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 3. Hero Emblem 3D Tilt & Dock Icon Quick Jump
-  // --------------------------------------------------------------------------
   const heroCard = document.getElementById('hero-emblem-card');
-  if (heroCard && isFinePointer && !prefersReduced) {
+  if (heroCard && isFinePointer) {
     heroCard.addEventListener('pointermove', (e) => {
+      if (motionPaused) return;
       const r = heroCard.getBoundingClientRect();
       const nx = (e.clientX - r.left) / r.width - 0.5;
       const ny = (e.clientY - r.top) / r.height - 0.5;
-      heroCard.style.transform = `rotateX(${(-ny * 9).toFixed(2)}deg) rotateY(${(nx * 11).toFixed(2)}deg)`;
+      heroCard.style.transform = `rotateX(${(-ny * 7).toFixed(2)}deg) rotateY(${(nx * 9).toFixed(2)}deg)`;
     });
     heroCard.addEventListener('pointerleave', () => {
       heroCard.style.transform = '';
     });
   }
 
-  document.querySelectorAll('[data-jump-card]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-jump-card');
-      const accent = btn.getAttribute('data-accent');
-      if (accent && window.StillwaveScene) window.StillwaveScene.setAccent(accent);
-      const card = document.getElementById(targetId);
-      if (card) {
-        // Ensure 'all' filter is active so target card is visible
-        activateFilter('all');
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        card.style.borderColor = 'rgba(247, 223, 164, 0.95)';
-        setTimeout(() => { card.style.borderColor = ''; }, 1600);
-      }
-    });
-  });
-
-  // --------------------------------------------------------------------------
-  // 4. Three.js 3D Scene Mode Switcher Button
-  // --------------------------------------------------------------------------
-  const sceneModeBtn = document.getElementById('scene-mode-btn');
-  const sceneModeLabel = document.getElementById('scene-mode-label');
-  if (sceneModeBtn && sceneModeLabel) {
-    sceneModeBtn.addEventListener('click', () => {
-      if (window.StillwaveScene) {
-        const nextMode = window.StillwaveScene.cycleMode();
-        sceneModeLabel.textContent = '3D: ' + nextMode;
-      }
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // 5. Interactive Featured Spotlight Deck (Auto-Cycling + Pause on Hover)
-  // --------------------------------------------------------------------------
   const spotTabs = Array.from(document.querySelectorAll('.spot-tab'));
   const spotSlides = Array.from(document.querySelectorAll('.spotlight-slide'));
   const spotStage = document.getElementById('spotlight-stage');
   let spotIndex = 0;
-  let spotPaused = false;
+  let spotHoverOrFocus = false;
   let spotElapsed = 0;
-  const SPOT_DURATION = 5500;
+  const SPOT_DURATION = 6000;
 
-  function showSpotlight(idx, syncScene) {
+  function showSpotlight(idx, moveFocus) {
     spotIndex = (idx + spotSlides.length) % spotSlides.length;
     spotElapsed = 0;
 
@@ -158,32 +130,49 @@
       const active = i === spotIndex;
       tab.classList.toggle('is-active', active);
       tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      tab.setAttribute('tabindex', active ? '0' : '-1');
       const bar = tab.querySelector('.spot-progress');
       if (bar) bar.style.transform = 'scaleX(0)';
+      if (active && moveFocus) tab.focus();
     });
 
     spotSlides.forEach((slide, i) => {
       const active = i === spotIndex;
       slide.classList.toggle('is-active', active);
-      if (active && spotStage) {
-        const glowColor = slide.getAttribute('data-glow') || 'rgba(223, 192, 124, 0.24)';
-        const accentHex = slide.getAttribute('data-accent') || '#dfc07c';
-        spotStage.style.setProperty('--spot-color', glowColor);
-        if (syncScene && window.StillwaveScene) {
-          window.StillwaveScene.setAccent(accentHex);
-          window.StillwaveScene.pulse();
-        }
-      }
+      slide.hidden = !active;
     });
+
+    if (moveFocus && window.StillwaveScene && !motionPaused) {
+      window.StillwaveScene.pulse();
+    }
   }
 
   spotTabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => showSpotlight(i, true));
+    tab.addEventListener('click', () => showSpotlight(i, false));
+    tab.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        showSpotlight(i + 1, true);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        showSpotlight(i - 1, true);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        showSpotlight(0, true);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        showSpotlight(spotSlides.length - 1, true);
+      }
+    });
   });
 
   if (spotStage) {
-    spotStage.addEventListener('pointerenter', () => { spotPaused = true; });
-    spotStage.addEventListener('pointerleave', () => { spotPaused = false; });
+    spotStage.addEventListener('pointerenter', () => { spotHoverOrFocus = true; });
+    spotStage.addEventListener('pointerleave', () => { spotHoverOrFocus = false; });
+    spotStage.addEventListener('focusin', () => { spotHoverOrFocus = true; });
+    spotStage.addEventListener('focusout', (e) => {
+      if (!spotStage.contains(e.relatedTarget)) spotHoverOrFocus = false;
+    });
   }
 
   let lastSpotTick = performance.now();
@@ -191,14 +180,12 @@
     const dt = now - lastSpotTick;
     lastSpotTick = now;
 
-    if (!spotPaused && !prefersReduced && spotSlides.length > 1) {
+    if (!motionPaused && !spotHoverOrFocus && spotSlides.length > 1) {
       spotElapsed += dt;
       const activeTab = spotTabs[spotIndex];
       if (activeTab) {
         const bar = activeTab.querySelector('.spot-progress');
-        if (bar) {
-          bar.style.transform = `scaleX(${Math.min(1, spotElapsed / SPOT_DURATION).toFixed(3)})`;
-        }
+        if (bar) bar.style.transform = `scaleX(${Math.min(1, spotElapsed / SPOT_DURATION).toFixed(3)})`;
       }
       if (spotElapsed >= SPOT_DURATION) {
         showSpotlight(spotIndex + 1, false);
@@ -211,37 +198,17 @@
     requestAnimationFrame(tickSpotlight);
   }
 
-  // --------------------------------------------------------------------------
-  // 6. 3D Card Tilt, Cursor Spotlight & Three.js Color Sync on All 12 Cards
-  // --------------------------------------------------------------------------
   const allCards = Array.from(document.querySelectorAll('.showcase-card'));
   const catalogSection = document.getElementById('catalog');
 
   allCards.forEach((card) => {
-    const accent = card.getAttribute('data-accent');
-    if (accent) {
-      card.style.setProperty('--accent', accent);
-    }
-
-    card.addEventListener('pointerenter', () => {
-      if (accent && window.StillwaveScene) {
-        window.StillwaveScene.setAccent(accent);
-      }
-    });
-
     card.addEventListener('pointermove', (e) => {
-      if (!isFinePointer || prefersReduced) return;
+      if (!isFinePointer || motionPaused) return;
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mx', `${x.toFixed(0)}px`);
-      card.style.setProperty('--my', `${y.toFixed(0)}px`);
-
-      // Subtle 3D tilt (gentler in runway mode)
       const isRunway = catalogSection && catalogSection.classList.contains('is-runway');
-      const maxTilt = isRunway ? 2.2 : 5.5;
-      const nx = x / rect.width - 0.5;
-      const ny = y / rect.height - 0.5;
+      const maxTilt = isRunway ? 1.8 : 4.5;
+      const nx = (e.clientX - rect.left) / rect.width - 0.5;
+      const ny = (e.clientY - rect.top) / rect.height - 0.5;
       card.style.setProperty('--rx', `${(-ny * maxTilt).toFixed(2)}deg`);
       card.style.setProperty('--ry', `${(nx * maxTilt).toFixed(2)}deg`);
     });
@@ -252,9 +219,6 @@
     });
   });
 
-  // --------------------------------------------------------------------------
-  // 7. Live Category Filter, Search Input & Grid / Runway View Switcher
-  // --------------------------------------------------------------------------
   const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
   const searchInput = document.getElementById('catalog-search');
   const viewBtns = Array.from(document.querySelectorAll('.view-btn'));
@@ -262,6 +226,7 @@
   const appsBlock = document.getElementById('apps-block');
   const emptyState = document.getElementById('empty-state');
   const resetFilterBtn = document.getElementById('reset-filters');
+  const catalogStatus = document.getElementById('catalog-status');
 
   let activeFilter = 'all';
   let searchQuery = '';
@@ -272,8 +237,8 @@
     const q = searchQuery.trim().toLowerCase();
 
     allCards.forEach((card) => {
-      const kind = card.getAttribute('data-kind');       // 'game' | 'app'
-      const status = card.getAttribute('data-status');   // 'live' | 'soon'
+      const kind = card.getAttribute('data-kind');
+      const status = card.getAttribute('data-status');
       const text = card.textContent.toLowerCase();
 
       let matchFilter = true;
@@ -282,9 +247,7 @@
       else if (activeFilter === 'live') matchFilter = status === 'live';
       else if (activeFilter === 'soon') matchFilter = status === 'soon';
 
-      const matchQuery = !q || text.includes(q);
-      const show = matchFilter && matchQuery;
-
+      const show = matchFilter && (!q || text.includes(q));
       card.classList.toggle('is-hidden-card', !show);
       if (show) {
         if (kind === 'game') visibleGames++;
@@ -294,8 +257,13 @@
 
     if (gamesBlock) gamesBlock.style.display = visibleGames > 0 ? '' : 'none';
     if (appsBlock) appsBlock.style.display = visibleApps > 0 ? '' : 'none';
-    if (emptyState) {
-      emptyState.classList.toggle('is-visible', visibleGames + visibleApps === 0);
+
+    const total = visibleGames + visibleApps;
+    if (emptyState) emptyState.classList.toggle('is-visible', total === 0);
+    if (catalogStatus) {
+      catalogStatus.textContent = total === 12 && !q && activeFilter === 'all'
+        ? 'Showing all 12 releases (7 games and 5 apps).'
+        : `Showing ${total} of 12 releases.`;
     }
   }
 
@@ -306,26 +274,27 @@
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-
-    if (window.StillwaveScene) {
-      if (filterName === 'app') window.StillwaveScene.setAccent('#5eead4');
-      else window.StillwaveScene.setAccent('#dfc07c');
-      window.StillwaveScene.pulse();
-    }
+    if (window.StillwaveScene && !motionPaused) window.StillwaveScene.pulse();
     applyCatalogFilters();
   }
 
   filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      activateFilter(btn.getAttribute('data-filter') || 'all');
-    });
+    btn.addEventListener('click', () => activateFilter(btn.getAttribute('data-filter') || 'all'));
   });
 
-  // Also wire quick-filter triggers from header / hero links
   document.querySelectorAll('[data-trigger-filter]').forEach((link) => {
     link.addEventListener('click', () => {
       const f = link.getAttribute('data-trigger-filter');
       if (f) activateFilter(f);
+    });
+  });
+
+  document.querySelectorAll('[data-jump-card]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = document.getElementById(btn.getAttribute('data-jump-card'));
+      if (!card) return;
+      activateFilter('all');
+      card.scrollIntoView({ behavior: motionPaused ? 'auto' : 'smooth', block: 'center' });
     });
   });
 
@@ -347,19 +316,17 @@
   viewBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const mode = btn.getAttribute('data-view');
-      viewBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
-      if (catalogSection) {
-        catalogSection.classList.toggle('is-runway', mode === 'runway');
-      }
-      if (window.StillwaveScene) window.StillwaveScene.pulse();
+      viewBtns.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      if (catalogSection) catalogSection.classList.toggle('is-runway', mode === 'runway');
     });
   });
 
-  // --------------------------------------------------------------------------
-  // 8. Scroll Reveal & Animated Telemetry Counters
-  // --------------------------------------------------------------------------
   const revealItems = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window && !motionPaused) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -367,57 +334,27 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    revealItems.forEach((el, idx) => {
-      el.style.transitionDelay = `${(idx % 4) * 55}ms`;
-      io.observe(el);
-    });
+    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+    revealItems.forEach((el) => io.observe(el));
   } else {
     revealItems.forEach((el) => el.classList.add('is-revealed'));
   }
 
-  // Animated Counters
-  const counters = document.querySelectorAll('[data-count]');
-  counters.forEach((el) => {
-    const target = parseInt(el.getAttribute('data-count') || '0', 10);
-    const suffix = el.getAttribute('data-suffix') || '';
-    if (prefersReduced || !target) {
-      el.innerHTML = `${target}<span>${suffix}</span>`;
-      return;
-    }
-    let start = null;
-    const duration = 1100;
-    function step(ts) {
-      if (!start) start = ts;
-      const p = Math.min(1, (ts - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const val = Math.round(eased * target);
-      el.innerHTML = `${val}<span>${suffix}</span>`;
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  });
-
-  // --------------------------------------------------------------------------
-  // 9. Copy Studio Email Micro-Interaction
-  // --------------------------------------------------------------------------
   const copyBtn = document.getElementById('copy-email-btn');
   const toast = document.getElementById('toast');
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
       const email = 'sufianwp97dot@gmail.com';
+      const notify = () => {
+        if (!toast) return;
+        toast.classList.add('is-visible');
+        setTimeout(() => toast.classList.remove('is-visible'), 2400);
+      };
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(email).then(showToast).catch(showToast);
+        navigator.clipboard.writeText(email).then(notify).catch(notify);
       } else {
-        showToast();
+        notify();
       }
     });
-  }
-
-  function showToast() {
-    if (!toast) return;
-    toast.classList.add('is-visible');
-    setTimeout(() => toast.classList.remove('is-visible'), 2400);
   }
 })();
